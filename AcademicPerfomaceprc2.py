@@ -1,45 +1,89 @@
-
+# Practical No. 01
+# Data Preprocessing and Outlier Detection
 
 import pandas as pd
 import numpy as np
-
-# Check NumPy version
-print(np.version.version)
-
-# Read CSV file
-df = pd.read_csv("StudentsPerformance.csv")
-
-# Display first 5 rows
-print(df.head())
-
-# Check null values
-print(df.isnull().sum())
-
-# Drop null values (optional)
-df = df.dropna()
-
-# Find mean of math score
-math_score_mean = df["math score"].mean()
-
-# Fill missing values with mean
-df["math score"] = df["math score"].fillna(math_score_mean)
-
-# Display updated data
-print(df.head())
-
-# Import matplotlib properly
 import matplotlib.pyplot as plt
 
-# Boxplot
+# -------------------------------
+# CHECK NUMPY VERSION
+# -------------------------------
+
+print("\nNumPy Version:\n")
+print(np.version.version)
+
+# -------------------------------
+# LOAD DATASET
+# -------------------------------
+
+df = pd.read_csv("StudentsPerformance.csv")
+
+# -------------------------------
+# DISPLAY FIRST 5 ROWS
+# -------------------------------
+
+print("\nFirst 5 Rows:\n")
+print(df.head())
+
+# -------------------------------
+# CHECK NULL VALUES
+# -------------------------------
+
+print("\nNull Values:\n")
+print(df.isnull().sum())
+
+# -------------------------------
+# HANDLE MISSING VALUES
+# -------------------------------
+
+# Calculate mean of math score
+math_score_mean = df["math score"].mean()
+
+# Replace null values with mean
+df["math score"] = df["math score"].fillna(
+    math_score_mean
+)
+
+# Remove remaining null values
+df = df.dropna()
+
+# -------------------------------
+# DISPLAY UPDATED DATA
+# -------------------------------
+
+print("\nUpdated Dataset:\n")
+print(df.head())
+
+# -------------------------------
+# BOXPLOT BEFORE REMOVING OUTLIERS
+# -------------------------------
+
+print("\nDisplaying Boxplot Before Removing Outliers...")
+
 df.boxplot()
+
 plt.show()
 
-# Remove outliers / filter records
+# -------------------------------
+# REMOVE OUTLIERS
+# -------------------------------
+
+# Keep records where math score > 30
 newdf = df[df["math score"] > 30]
 
-# Display filtered data
+# -------------------------------
+# DISPLAY FILTERED DATA
+# -------------------------------
+
+print("\nFiltered Dataset:\n")
 print(newdf.head())
 
-# Boxplot after filtering
+# -------------------------------
+# BOXPLOT AFTER REMOVING OUTLIERS
+# -------------------------------
+
+print("\nDisplaying Boxplot After Removing Outliers...")
+
 newdf.boxplot()
+
 plt.show()
